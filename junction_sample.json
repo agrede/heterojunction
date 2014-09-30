@@ -1,0 +1,43 @@
+[
+    {
+        "note": "Group IV semiconductors only use groupA",
+        "crystalStructure":"ZBB",
+        "groupA": [
+            "Al",
+            "Ga"
+        ],
+        "groupB": [
+            "As"
+        ],
+        "weightsA": [0.25,0.75],
+        "weightsB": [1],
+        "impurities": [
+            {
+                "notes": "energy [meV] or element can be specified, if not ideal is assumed. Type can be A or D for acceptors or donors respectively. Type is A or D for acceptor or donor respectively. Concentration is in m^-3",
+                "type": "D",
+                "element": "Si",
+                "concentration": 5e23
+            }
+        ]
+    },
+    {
+        "note": "Group IV semiconductors only use groupA",
+        "crystalStructure":"ZBB",
+        "groupA": [
+            "Ga"
+        ],
+        "groupB": [
+            "As"
+        ],
+        "weightsA": [1],
+        "weightsB": [1],
+        "impurities": [
+            {
+                "notes": "energy [meV] or element can be specified, if not ideal is assumed. Type can be A or D for acceptors or donors respectively. Type is A or D for acceptor or donor respectively. Concentration is in m^-3",
+                "type": "A",
+                "element": "Be",
+                "concentration": 2e23
+            }
+        ]
+    }
+]
