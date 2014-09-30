@@ -1,4 +1,4 @@
-function xmax = plotCarCon(x0, xmult, jn, ind0)
+function [xmax,x,y] = plotCarCon(x0, xmult, jn, ind0)
   % plotCarCon
   %
   % Copyright (C) 2014 Alex J. Grede
@@ -9,8 +9,9 @@ function xmax = plotCarCon(x0, xmult, jn, ind0)
     x0 = xmax;
   endif
   o1 = ones(sum(jn.ind(ind0,:)),1);
-  semilogy((jn.x(ind0,logical(jn.ind(ind0,:)))-x0).*xmult, ...
-           abs([jn.n(logical(jn.ind(ind0,:)),:), ...
-                jn.p(logical(jn.ind(ind0,:)),:), ...
-                jn.NI(logical(jn.ind(ind0,:)),:)]).*1e-6);
+  x = (jn.x(ind0,logical(jn.ind(ind0,:)))'-x0).*xmult;
+  y = abs([jn.n(logical(jn.ind(ind0,:)),:), ...
+           jn.p(logical(jn.ind(ind0,:)),:), ...
+           jn.NI(logical(jn.ind(ind0,:)),:)]).*1e-6;
+  semilogy(x,y);
 endfunction

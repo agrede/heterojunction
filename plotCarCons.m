@@ -1,4 +1,4 @@
-function plt = plotCarCons(jn, xmult)
+function [x,y] = plotCarCons(jn, xmult)
   % plotCarCons
   %
   % Copyright (C) 2014 Alex J. Grede
@@ -6,10 +6,16 @@ function plt = plotCarCons(jn, xmult)
   % This function is part of heterojunction (https://github.com/agrede/heterojunction)
 
   x0 = -max(jn{1}.x(jn{1}.ind0,:));
+  x = [];
+  y = [];
   hold on;
   for k = 1:(length(jn)-1)
-    x0 = plotCarCon(x0, -xmult, jn{k}, jn{k}.ind0);
-    x0 = plotCarCon(x0, xmult, jn{k+1}, jn{k}.ind0);
+    [x0,tmpx,tmpy] = plotCarCon(x0, -xmult, jn{k}, jn{k}.ind0);
+    x = [x;tmpx];
+    y = [y;tmpy];
+    [x0,tmpx,tmpy] = plotCarCon(x0, xmult, jn{k+1}, jn{k}.ind0);
+    x = [x;tmpx];
+    y = [y;tmpy];
   endfor
   legend({"Gamma", "Lambda", "Chi", "HH", "LH", "SO", "Impurity"})
   hold off;

@@ -1,4 +1,4 @@
-function xmax = plotBand(x0, xmult, jn, ind0)
+function [xmax,x,y] = plotBand(x0, xmult, jn, ind0)
 % plotBand
 %
 % Copyright (C) 2014 Alex J. Grede
@@ -9,6 +9,7 @@ function xmax = plotBand(x0, xmult, jn, ind0)
     x0 = xmax;
   endif
   o1 = ones(sum(jn.ind(ind0,:)),1);
-  plot((jn.x(ind0,logical(jn.ind(ind0,:)))-x0).*xmult, ...
-       o1*[jn.phin -jn.phip]-jn.psi(logical(jn.ind(ind0,:)), [1 1]));
+  x = (jn.x(ind0,logical(jn.ind(ind0,:)))'-x0).*xmult;
+  y = o1*[jn.phin -jn.phip]-jn.psi(logical(jn.ind(ind0,:)), [1 1]);
+  plot(x,y);
 endfunction
