@@ -1,6 +1,6 @@
 function [eta,jn] = simJunction(Stack,T,Param,PC,psisRng,neta,approxC,approxV)
-% SIMJUNCTION simulates Junction by solving the carrier concentrations and
-%   poisson distribution
+% SIMJUNCTION simulates electrostatics at equalibrium by solving the carrier
+%   concentrations and poisson equation
 %
 %   [ETA, JN] = SIMJUNCTION(STACK,T,PROP,PC)
 %       STACK   = gate stack struct (must use SI units)
@@ -46,17 +46,17 @@ function [eta,jn] = simJunction(Stack,T,Param,PC,psisRng,neta,approxC,approxV)
   VBO = zeros(length(Stack),1);
   for k = 1:length(Stack)
     jn{k} = semiProps(Stack{k},T,Param,PC);
-    Eg(k) = min(semiProps.Eg);
-    jn{k}.Eg = Eg(k);
+    Eg(k) = min(jn{k}.Eg);
+    jn{k}.Egm = Eg(k);
     jn{k}.etaV = -Eg(k)./kT;
-    VBO(k) = semiProps.VBO;
+    VBO(k) = jn{k}.VBO;
   endfor
 
   % reference junction
   [Egr, kr] = max(Eg);
 
   eta = linspace(-(psisRng(1).*PC.e+Egr),psisRng(2).*PC.e,neta)'./kT;
-  detac = Eg-Egr+VBO-VBO(kr);
+  detac = (Eg-Egr+VBO-VBO(kr))./kT;
 
   for k = 1:length(Stack)
     jn{k}.detac = detac(k);
@@ -72,11 +72,11 @@ function [eta,jn] = simJunction(Stack,T,Param,PC,psisRng,neta,approxC,approxV)
                                                     T, jn{k}.kappas, PC);
     jn{k}.phin = -interp1(jn{k}.psi, (eta-detac(k)), 0, 'spline').*kT./PC.e;
     jn{k}.phip = Eg(k)./PC.e-jn{k}.phin;
-    [jn{k}.y, jn{k}.ind] = yByEta(jn{k}.psi, jn{k}.D, jn{k}.kappas, PC);
+    [jn{k}.x, jn{k}.ind] = yByEta(jn{k}.psi, jn{k}.D, jn{k}.kappas, PC);
 
     if k>1
-      jn{k-1}.eta0 = interp1(sum([jn{k-1}.D JN{k}.D],2),eta,0,'spline');
-      [tmp, jn{k-1}.ind0] = min(abs(eta-eta0));
+      jn{k-1}.eta0 = interp1(sum([jn{k-1}.D jn{k}.D],2),eta,0,'spline');
+      [tmp, jn{k-1}.ind0] = min(abs(eta-jn{k-1}.eta0));
     endif
   endfor
 endfunction
