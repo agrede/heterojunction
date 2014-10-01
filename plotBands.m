@@ -11,11 +11,11 @@ function [x,y] = plotBands(jn, xmult)
   hold on;
   for k = 1:(length(jn)-1)
     [x0,tmpx,tmpy] = plotBand(x0, -xmult, jn{k}, jn{k}.ind0);
-    x = [x;tmpx];
-    y = [y;tmpy];
+    x = [x;flipdim(tmpx,1)];
+    y = [y;flipdim(tmpy,1)];
     [x0,tmpx,tmpy] = plotBand(x0, xmult, jn{k+1}, jn{k}.ind0);
-    x = [x;tmpx];
-    y = [y;tmpy];
+    x = [x;flipdim(tmpx,1)];
+    y = [y;flipdim(tmpy,1)];
   endfor
   hold off;
 endfunction
