@@ -12,4 +12,8 @@ function [xmax,x,y] = plotBand(x0, xmult, jn, ind0)
   x = (jn.x(ind0,logical(jn.ind(ind0,:)))'-x0).*xmult;
   y = o1*[jn.phin -jn.phip]-jn.psi(logical(jn.ind(ind0,:)), [1 1]);
   plot(x,y);
+  if (x(1)>x(end))
+    x = flipdim(x,1);
+    y = flipdim(y,1);
+  endif
 endfunction

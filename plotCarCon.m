@@ -14,4 +14,8 @@ function [xmax,x,y] = plotCarCon(x0, xmult, jn, ind0)
            jn.p(logical(jn.ind(ind0,:)),:), ...
            jn.NI(logical(jn.ind(ind0,:)),:)]).*1e-6;
   semilogy(x,y);
+  if (x(1)>x(end))
+    x = flipdim(x,1);
+    y = flipdim(y,1);
+  endif
 endfunction
